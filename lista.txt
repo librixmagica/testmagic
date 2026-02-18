@@ -1,3 +1,4 @@
-Colors&Mazes.magic
-WillysMap.magic
 Demo.magic
+
+WillysMap.magic
+Colors&Mazes.magic
