@@ -175,12 +175,15 @@
     <div class="header">
         <div class="title">MagicViewer</div>
         <div class="button-group">
-            <button class="open-button" onclick="startCodeScan()">[:.:]</button>
+            <button class="open-button">|[:.:]|</button>
         </div>
     </div>
     
     <div class="grid-container" id="magicGrid">
-        <!-- Los items .magic aparecerán aquí -->
+        <!-- Primera casilla fija: botón de scan -->
+        <div class="magic-item" id="scanItem" onclick="startCodeScan()">
+            <img class="magic-icon" src="scan.png" alt="Escanear" />
+        </div>
     </div>
     
     <!-- Code Scanner Container (QR, Data Matrix, etc.) -->
@@ -284,14 +287,17 @@
         async function startCodeScan() {
             const codeScannerContainer = document.getElementById('codeScannerContainer');
             const codeStatus = document.getElementById('codeStatus');
-            const grid = document.getElementById('magicGrid');
+            const scanItem = document.getElementById('scanItem');
             
             try {
                 codeStatus.textContent = 'Iniciando cámara...';
                 
-                // Mostrar el contenedor del escáner en el grid
-                grid.appendChild(codeScannerContainer);
+                // Reemplazar la primera casilla con el scanner
+                scanItem.style.display = 'none';
                 codeScannerContainer.style.display = 'block';
+                // Insertar el scanner como primera casilla del grid
+                const grid = document.getElementById('magicGrid');
+                grid.insertBefore(codeScannerContainer, grid.firstChild);
                 
                 codeStatus.textContent = 'Escaneando...';
                 
@@ -338,11 +344,23 @@
             
             const codeScannerContainer = document.getElementById('codeScannerContainer');
             codeScannerContainer.style.display = 'none';
+            
+            // Restaurar la primera casilla con el botón scan
+            const scanItem = document.getElementById('scanItem');
+            scanItem.style.display = 'flex';
         }
         
         async function displayMagicFiles(files) {
             const grid = document.getElementById('magicGrid');
+            
+            // Limpiar todo excepto la primera casilla (scanItem) y el scanner
+            const scanItem = document.getElementById('scanItem');
+            const codeScannerContainer = document.getElementById('codeScannerContainer');
             grid.innerHTML = '';
+            grid.appendChild(scanItem);
+            if (codeScannerContainer.parentElement !== grid) {
+                // asegurar que el scanner siga fuera si no está activo
+            }
             
             for (const magicFile of files) {
                 try {
