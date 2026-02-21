@@ -159,7 +159,7 @@
         .scanner-status {
             font-size: 10px;
             text-align: center;
-            color: gray;
+            color: green;
         }
         
         #codeVideo {
@@ -190,7 +190,7 @@
     <div id="codeScannerContainer" style="display: none;">
         <div class="scanner-container">
             <video id="codeVideo" autoplay playsinline></video>
-            <div class="scanner-status" id="codeStatus">..:.scanning.:..</div>
+            <div class="scanner-status" id="codeStatus">...scanning...</div>
         </div>
     </div>
     
@@ -275,11 +275,11 @@
                     }
                 } else {
                     console.error(`Archivo ${fileName} no encontrado`);
-                    alert(`No se encontró el archivo: ${fileName}`);
+                    alert(`no find librix: ${fileName}`);
                 }
             } catch (error) {
                 console.error('Error cargando archivo magic:', error);
-                alert(`Error al cargar el archivo: ${fileName}`);
+                alert(`error load librix: ${fileName}`);
             }
         }
         
@@ -300,7 +300,7 @@
             const scanItem = document.getElementById('scanItem');
             
             try {
-                codeStatus.textContent = '...camera...';
+                codeStatus.textContent = '...starting...';
                 
                 // Reemplazar la primera casilla con el scanner
                 scanItem.style.display = 'none';
@@ -309,7 +309,7 @@
                 const grid = document.getElementById('magicGrid');
                 grid.insertBefore(codeScannerContainer, grid.firstChild);
                 
-                codeStatus.textContent = '..:.scanning.:..';
+                codeStatus.textContent = '...scanning...';
                 
                 // Inicializar ZXing MultiFormatReader
                 codeReader = new ZXing.BrowserMultiFormatReader();
@@ -320,10 +320,10 @@
                         const fileName = result.text;
                         const format = result.format;
                         
-                        console.log('code:', fileName);
-                        console.log('format:', format);
+                        console.log('Código detectado:', fileName);
+                        console.log('Formato:', format);
                         
-                        codeStatus.textContent = 'librix detected';
+                        codeStatus.textContent = 'librix detected!';
                         
                         // Detener escaneo
                         stopCodeScan();
@@ -341,8 +341,8 @@
                 });
                 
             } catch (error) {
-                console.error('error scanner:', error);
-                codeStatus.textContent = 'error: ' + error.message;
+                console.error('Error iniciando escáner:', error);
+                codeStatus.textContent = 'Error: ' + error.message;
             }
         }
         
@@ -468,13 +468,13 @@
                         
                         if (document.documentElement.requestFullscreen) {
                             document.documentElement.requestFullscreen().catch(err => {
-                                console.log('fullscreen impossible:', err);
+                                console.log('No se pudo entrar en fullscreen:', err);
                             });
                         }
                     }
                 }
             } catch (error) {
-                console.error('error magic file:', error);
+                console.error('Error abriendo archivo magic:', error);
             }
         }
         
@@ -483,7 +483,7 @@
             
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(err => {
-                    console.log('fullscreen out error:', err);
+                    console.log('Error saliendo de fullscreen:', err);
                 });
             }
             
