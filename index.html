@@ -157,7 +157,7 @@
         }
         
         .scanner-status {
-            font-size: 12px;
+            font-size: 10px;
             text-align: center;
             color: gray;
         }
@@ -175,7 +175,7 @@
     <div class="header">
         <div class="title">MagicViewer</div>
         <div class="button-group">
-            <button class="open-button">|[:.:]|</button>
+            <button class="open-button" onclick="toggleCodeScan()">|[:.:]|</button>
         </div>
     </div>
     
@@ -190,7 +190,7 @@
     <div id="codeScannerContainer" style="display: none;">
         <div class="scanner-container">
             <video id="codeVideo" autoplay playsinline></video>
-            <div class="scanner-status" id="codeStatus">Escaneando...</div>
+            <div class="scanner-status" id="codeStatus">..:.scanning.:..</div>
         </div>
     </div>
     
@@ -284,13 +284,23 @@
         }
         
         // CODE SCANNER FUNCTIONS (QR, Data Matrix, etc.)
+        function toggleCodeScan() {
+            const codeScannerContainer = document.getElementById('codeScannerContainer');
+            const isOpen = codeScannerContainer.style.display === 'block';
+            if (isOpen) {
+                stopCodeScan();
+            } else {
+                startCodeScan();
+            }
+        }
+        
         async function startCodeScan() {
             const codeScannerContainer = document.getElementById('codeScannerContainer');
             const codeStatus = document.getElementById('codeStatus');
             const scanItem = document.getElementById('scanItem');
             
             try {
-                codeStatus.textContent = 'Iniciando cámara...';
+                codeStatus.textContent = '...camera...';
                 
                 // Reemplazar la primera casilla con el scanner
                 scanItem.style.display = 'none';
@@ -299,7 +309,7 @@
                 const grid = document.getElementById('magicGrid');
                 grid.insertBefore(codeScannerContainer, grid.firstChild);
                 
-                codeStatus.textContent = 'Escaneando...';
+                codeStatus.textContent = '..:.scanning.:..';
                 
                 // Inicializar ZXing MultiFormatReader
                 codeReader = new ZXing.BrowserMultiFormatReader();
@@ -310,10 +320,10 @@
                         const fileName = result.text;
                         const format = result.format;
                         
-                        console.log('Código detectado:', fileName);
-                        console.log('Formato:', format);
+                        console.log('code:', fileName);
+                        console.log('format:', format);
                         
-                        codeStatus.textContent = '✓ Código detectado!';
+                        codeStatus.textContent = 'librix detected';
                         
                         // Detener escaneo
                         stopCodeScan();
@@ -331,8 +341,8 @@
                 });
                 
             } catch (error) {
-                console.error('Error iniciando escáner:', error);
-                codeStatus.textContent = 'Error: ' + error.message;
+                console.error('error scanner:', error);
+                codeStatus.textContent = 'error: ' + error.message;
             }
         }
         
@@ -429,6 +439,7 @@
                     
                     await player.load(swfUrl);
                     
+                    stopCodeScan();
                     document.getElementById('fullscreenContainer').style.display = 'block';
                     
                     if (document.documentElement.requestFullscreen) {
@@ -452,17 +463,18 @@
                         iframe.style.display = 'block';
                         iframe.src = url;
                         
+                        stopCodeScan();
                         document.getElementById('fullscreenContainer').style.display = 'block';
                         
                         if (document.documentElement.requestFullscreen) {
                             document.documentElement.requestFullscreen().catch(err => {
-                                console.log('No se pudo entrar en fullscreen:', err);
+                                console.log('fullscreen impossible:', err);
                             });
                         }
                     }
                 }
             } catch (error) {
-                console.error('Error abriendo archivo magic:', error);
+                console.error('error magic file:', error);
             }
         }
         
@@ -471,7 +483,7 @@
             
             if (document.fullscreenElement) {
                 document.exitFullscreen().catch(err => {
-                    console.log('Error saliendo de fullscreen:', err);
+                    console.log('fullscreen out error:', err);
                 });
             }
             
