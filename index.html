@@ -157,17 +157,18 @@
         }
         
         .scanner-status {
-            font-size: 10px;
+            font-size: 12px;
             text-align: center;
-            color: green;
+            color: #5dc1b9;
         }
         
         #codeVideo {
             width: 150px;
             height: 150px;
             border: 1px solid #333;
+            border-radius: 10%;
             object-fit: cover;
-            margin-bottom: 10px;
+            margin-bottom: 3px;
         }
     </style>
 </head>
@@ -190,7 +191,7 @@
     <div id="codeScannerContainer" style="display: none;">
         <div class="scanner-container">
             <video id="codeVideo" autoplay playsinline></video>
-            <div class="scanner-status" id="codeStatus">...scanning...</div>
+            <div class="scanner-status" id="codeStatus">leyendo...</div>
         </div>
     </div>
     
@@ -217,7 +218,7 @@
                 const response = await fetch(`lista.txt?t=${timestamp}`);
                 
                 if (!response.ok) {
-                    console.log('No se pudo cargar lista.txt');
+                    console.log('No se pudo cargar libreria');
                     return;
                 }
                 
@@ -248,7 +249,7 @@
                     displayMagicFiles(rootMagicFiles);
                 }
             } catch (error) {
-                console.error('Error cargando lista.txt:', error);
+                console.error('Error cargando libreria:', error);
             }
         }
         
@@ -275,11 +276,11 @@
                     }
                 } else {
                     console.error(`Archivo ${fileName} no encontrado`);
-                    alert(`no find librix: ${fileName}`);
+                    alert(`Librix no encontrado: ${fileName}`);
                 }
             } catch (error) {
-                console.error('Error cargando archivo magic:', error);
-                alert(`error load librix: ${fileName}`);
+                console.error('Error cargando archivo magico:', error);
+                alert(`Librix error: ${fileName}`);
             }
         }
         
@@ -300,7 +301,8 @@
             const scanItem = document.getElementById('scanItem');
             
             try {
-                codeStatus.textContent = '...starting...';
+                codeStatus.textContent = 'init cam...';
+                document.querySelector('.open-button').style.color = '#5dc1b9';
                 
                 // Reemplazar la primera casilla con el scanner
                 scanItem.style.display = 'none';
@@ -309,10 +311,10 @@
                 const grid = document.getElementById('magicGrid');
                 grid.insertBefore(codeScannerContainer, grid.firstChild);
                 
-                codeStatus.textContent = '...scanning...';
+                codeStatus.textContent = 'leyendo...';
                 
                 // Inicializar ZXing MultiFormatReader
-                codeReader = new ZXing.BrowserMultiFormatReader();
+                codeReader = new ZXing.BrowserDatamatrixCodeReader();
                 
                 // Usar el método de ZXing que maneja todo automáticamente
                 codeReader.decodeFromVideoDevice(undefined, 'codeVideo', (result, err) => {
@@ -323,7 +325,7 @@
                         console.log('Código detectado:', fileName);
                         console.log('Formato:', format);
                         
-                        codeStatus.textContent = 'librix detected!';
+                        codeStatus.textContent = 'Librix encontrado!';
                         
                         // Detener escaneo
                         stopCodeScan();
@@ -354,6 +356,7 @@
             
             const codeScannerContainer = document.getElementById('codeScannerContainer');
             codeScannerContainer.style.display = 'none';
+            document.querySelector('.open-button').style.color = 'gray';
             
             // Restaurar la primera casilla con el botón scan
             const scanItem = document.getElementById('scanItem');
@@ -393,7 +396,7 @@
                         grid.appendChild(item);
                     }
                 } catch (error) {
-                    console.error('Error procesando archivo magic:', error);
+                    console.error('Error procesando archivo magico:', error);
                 }
             }
             
@@ -474,7 +477,7 @@
                     }
                 }
             } catch (error) {
-                console.error('Error abriendo archivo magic:', error);
+                console.error('Error abriendo archivo magico:', error);
             }
         }
         
