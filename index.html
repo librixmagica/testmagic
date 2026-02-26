@@ -314,7 +314,7 @@
                 codeStatus.textContent = 'leyendo...';
                 
                 // Inicializar ZXing MultiFormatReader
-                codeReader = new ZXing.BrowserDatamatrixCodeReader();
+                codeReader = new ZXing.BrowserAztecCodeReader();
                 
                 // Usar el método de ZXing que maneja todo automáticamente
                 codeReader.decodeFromVideoDevice(undefined, 'codeVideo', (result, err) => {
