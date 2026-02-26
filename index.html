@@ -96,7 +96,7 @@
         }
         
         .magic-item:hover {
-            background-color: #121212;
+            background-color: black;
         }
         
         .magic-icon {
@@ -188,7 +188,7 @@
     </div>
     
     <!-- Code Scanner Container (QR, Data Matrix, etc.) -->
-    <div id="codeScannerContainer" style="display: none;">
+    <div id="codeScannerContainer" style="display: none;" onclick="stopCodeScan()">
         <div class="scanner-container">
             <video id="codeVideo" autoplay playsinline></video>
             <div class="scanner-status" id="codeStatus">leyendo...</div>
@@ -314,7 +314,7 @@
                 codeStatus.textContent = 'leyendo...';
                 
                 // Inicializar ZXing MultiFormatReader
-                codeReader = new ZXing.BrowserAztecCodeReader();
+                codeReader = new ZXing.BrowserDatamatrixCodeReader();
                 
                 // Usar el método de ZXing que maneja todo automáticamente
                 codeReader.decodeFromVideoDevice(undefined, 'codeVideo', (result, err) => {
