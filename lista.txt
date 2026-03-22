@@ -1,4 +1,4 @@
 Demo.magic
-Tools.magic
+Box.magic
 WillysMap.magic
 Colors&Mazes.magic
