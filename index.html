@@ -444,6 +444,7 @@
                     
                     stopCodeScan();
                     document.getElementById('fullscreenContainer').style.display = 'block';
+                    history.pushState({ fullscreen: true }, '');
                     
                     if (document.documentElement.requestFullscreen) {
                         document.documentElement.requestFullscreen().catch(err => {
@@ -468,6 +469,7 @@
                         
                         stopCodeScan();
                         document.getElementById('fullscreenContainer').style.display = 'block';
+                        history.pushState({ fullscreen: true }, '');
                         
                         if (document.documentElement.requestFullscreen) {
                             document.documentElement.requestFullscreen().catch(err => {
@@ -494,6 +496,14 @@
             document.getElementById('fullscreenIframe').src = '';
             document.getElementById('fullscreenSwf').innerHTML = '';
         }
+        
+        // Cerrar fullscreen con botón Atrás del navegador/celular
+        window.addEventListener('popstate', function(e) {
+            const container = document.getElementById('fullscreenContainer');
+            if (container.style.display === 'block') {
+                closeFullscreen();
+            }
+        });
         
         document.addEventListener('keydown', function(e) {
             if (e.key === 'Escape') {
