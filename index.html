@@ -446,7 +446,8 @@
                     document.getElementById('fullscreenContainer').style.display = 'block';
                     history.pushState({ fullscreen: true }, '');
                     
-                    if (document.documentElement.requestFullscreen) {
+                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                    if (!isIOS && document.documentElement.requestFullscreen) {
                         document.documentElement.requestFullscreen().catch(err => {
                             console.log('No se pudo entrar en fullscreen:', err);
                         });
@@ -471,7 +472,8 @@
                         document.getElementById('fullscreenContainer').style.display = 'block';
                         history.pushState({ fullscreen: true }, '');
                         
-                        if (document.documentElement.requestFullscreen) {
+                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
+                        if (!isIOS && document.documentElement.requestFullscreen) {
                             document.documentElement.requestFullscreen().catch(err => {
                                 console.log('No se pudo entrar en fullscreen:', err);
                             });
