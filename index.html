@@ -21,7 +21,7 @@
     <link rel="apple-touch-icon" href="icon-192.png">
     
     <!-- Ruffle Player -->
-    <script src="ruffle/ruffle.js"></script>
+    <script src="https://unpkg.com/@ruffle-rs/ruffle"></script>
     <script>
         window.RufflePlayer = window.RufflePlayer || {};
         window.RufflePlayer.config = {
@@ -445,13 +445,6 @@
                     stopCodeScan();
                     document.getElementById('fullscreenContainer').style.display = 'block';
                     history.pushState({ fullscreen: true }, '');
-                    
-                    const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                    if (!isIOS && document.documentElement.requestFullscreen) {
-                        document.documentElement.requestFullscreen().catch(err => {
-                            console.log('No se pudo entrar en fullscreen:', err);
-                        });
-                    }
                 } else {
                     // Si no hay SWF, buscar index.html
                     const indexFile = zipContent.files['index.html'];
@@ -471,13 +464,6 @@
                         stopCodeScan();
                         document.getElementById('fullscreenContainer').style.display = 'block';
                         history.pushState({ fullscreen: true }, '');
-                        
-                        const isIOS = /iPad|iPhone|iPod/.test(navigator.userAgent);
-                        if (!isIOS && document.documentElement.requestFullscreen) {
-                            document.documentElement.requestFullscreen().catch(err => {
-                                console.log('No se pudo entrar en fullscreen:', err);
-                            });
-                        }
                     }
                 }
             } catch (error) {
