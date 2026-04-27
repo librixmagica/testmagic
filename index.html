@@ -112,7 +112,6 @@
             background: black;
             z-index: 9999;
             display: none;
-            align-items: flex-start;
         }
         
         .fullscreen-iframe {
@@ -123,7 +122,7 @@
         
         .fullscreen-swf {
             width: 100%;
-            height: auto;
+            height: 100%;
             display: none;
             touch-action: none;
         }
@@ -433,7 +432,7 @@
                     swfContainer.innerHTML = '';
                     const player = window.RufflePlayer.newest().createPlayer();
                     player.style.width = '100%';
-                    player.style.height = 'auto';
+                    player.style.height = '100%';
                     swfContainer.appendChild(player);
                     
                     // Prevenir menú contextual en el player
@@ -459,7 +458,7 @@
                         // Mostrar iframe, ocultar contenedor SWF
                         swfContainer.style.display = 'none';
                         iframe.style.display = 'block';
-                        iframe.srcdoc = htmlContent;
+                        iframe.src = url;
                         
                         stopCodeScan();
                         document.getElementById('fullscreenContainer').style.display = 'block';
