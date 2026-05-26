@@ -1,5 +1,5 @@
 Tools.magic
+senet.magic
 H1.magic
 WillysMap.magic
 Colors&Mazes.magic
-senet.magic
