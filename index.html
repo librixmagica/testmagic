@@ -112,6 +112,7 @@
             background: black;
             z-index: 9999;
             display: none;
+            align-items: flex-start;
         }
         
         .fullscreen-iframe {
@@ -122,7 +123,7 @@
         
         .fullscreen-swf {
             width: 100%;
-            height: 100%;
+            height: auto;
             display: none;
             touch-action: none;
         }
@@ -253,7 +254,7 @@
             try {
                 // Fetch lista.txt con cache busting
                 const timestamp = Date.now();
-                const response = await fetch(`lista.txt?t=${timestamp}`);
+                const response = await fetch(`magicfiles/lista.txt?t=${timestamp}`);
                 
                 if (!response.ok) {
                     console.log('No se pudo cargar libreria');
@@ -270,7 +271,7 @@
                 // #5: fetch en paralelo en lugar de secuencial
                 await Promise.all(fileNames.map(async (fileName) => {
                     try {
-                        const fileResponse = await fetch(fileName);
+                        const fileResponse = await fetch(`magicfiles/${fileName}`);
                         if (fileResponse.ok) {
                             const blob = await fileResponse.blob();
                             rootMagicFiles.push({
@@ -296,7 +297,7 @@
             try {
                 console.log(`Intentando cargar: ${fileName}`);
                 
-                const response = await fetch(fileName);
+                const response = await fetch(`magicfiles/${fileName}`);
                 if (response.ok) {
                     const blob = await response.blob();
                     const magicFile = {
@@ -485,7 +486,7 @@
                     swfContainer.innerHTML = '';
                     const player = window.RufflePlayer.newest().createPlayer();
                     player.style.width = '100%';
-                    player.style.height = '100%';
+                    player.style.height = 'auto';
                     swfContainer.appendChild(player);
                     
                     // Prevenir menú contextual en el player
@@ -502,17 +503,13 @@
                     const indexFile = zipContent.files['index.html'];
                     if (indexFile) {
                         const htmlContent = await indexFile.async('string');
-                        const blob = new Blob([htmlContent], { type: 'text/html' });
-                        const url = URL.createObjectURL(blob);
-                        activeBlobUrls.push({ url, type: 'content' }); // #3: registrar para liberar al cerrar
-                        
                         const iframe = document.getElementById('fullscreenIframe');
                         const swfContainer = document.getElementById('fullscreenSwf');
                         
                         // Mostrar iframe, ocultar contenedor SWF
                         swfContainer.style.display = 'none';
                         iframe.style.display = 'block';
-                        iframe.src = url;
+                        iframe.srcdoc = htmlContent;
                         
                         stopCodeScan();
                         document.getElementById('fullscreenContainer').style.display = 'block';
