@@ -107,6 +107,12 @@
             gap: 20px 5px;
             margin-top: 20px;
         }
+
+        @media (min-width: 550px) {
+            .grid-container {
+                grid-template-columns: repeat(3, minmax(0, 200px));
+            }
+        }
         
         .magic-item {
             display: flex;
