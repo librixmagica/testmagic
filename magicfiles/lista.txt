@@ -1,3 +1,3 @@
-Tools.magic
-H1.magic
+tools.magic
+h1.magic
 senet.magic
