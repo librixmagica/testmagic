@@ -1,7 +1,7 @@
 {
-  "name": "MagicViewer",
-  "short_name": "MagicViewer",
-  "description": "Visor de archivos .magic - Abre y visualiza contenido mágico",
+  "name": "cartogama",
+  "short_name": "cartogama",
+  "description": "Visor de contenidos mágicos",
   "start_url": "./index.html",
   "display": "standalone",
   "background_color": "#000000",
