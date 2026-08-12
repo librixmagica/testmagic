@@ -1,3 +1,4 @@
 tools.magic
 h1.magic
 senet.magic
+willys.magic
